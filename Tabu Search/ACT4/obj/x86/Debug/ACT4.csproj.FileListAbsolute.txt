@@ -35,3 +35,16 @@ D:\Coding\CS345\N Queens\ACT4\obj\x86\Debug\ACT4.csproj.GenerateResource.cache
 D:\Coding\CS345\N Queens\ACT4\obj\x86\Debug\ACT4.csproj.CoreCompileInputs.cache
 D:\Coding\CS345\N Queens\ACT4\obj\x86\Debug\ACT4.exe
 D:\Coding\CS345\N Queens\ACT4\obj\x86\Debug\ACT4.pdb
+D:\Coding\Heuristic Search Algorithms\Tabu Search\ACT4\bin\Debug\ACT4.exe.config
+D:\Coding\Heuristic Search Algorithms\Tabu Search\ACT4\bin\Debug\ACT4.exe
+D:\Coding\Heuristic Search Algorithms\Tabu Search\ACT4\bin\Debug\ACT4.pdb
+D:\Coding\Heuristic Search Algorithms\Tabu Search\ACT4\bin\Debug\Microsoft.Bcl.HashCode.dll
+D:\Coding\Heuristic Search Algorithms\Tabu Search\ACT4\bin\Debug\Microsoft.Bcl.HashCode.xml
+D:\Coding\Heuristic Search Algorithms\Tabu Search\ACT4\obj\x86\Debug\ACT4.csproj.AssemblyReference.cache
+D:\Coding\Heuristic Search Algorithms\Tabu Search\ACT4\obj\x86\Debug\ACT4.Form1.resources
+D:\Coding\Heuristic Search Algorithms\Tabu Search\ACT4\obj\x86\Debug\ACT4.Properties.Resources.resources
+D:\Coding\Heuristic Search Algorithms\Tabu Search\ACT4\obj\x86\Debug\ACT4.csproj.GenerateResource.cache
+D:\Coding\Heuristic Search Algorithms\Tabu Search\ACT4\obj\x86\Debug\ACT4.csproj.CoreCompileInputs.cache
+D:\Coding\Heuristic Search Algorithms\Tabu Search\ACT4\obj\x86\Debug\ACT4.csproj.Up2Date
+D:\Coding\Heuristic Search Algorithms\Tabu Search\ACT4\obj\x86\Debug\ACT4.exe
+D:\Coding\Heuristic Search Algorithms\Tabu Search\ACT4\obj\x86\Debug\ACT4.pdb

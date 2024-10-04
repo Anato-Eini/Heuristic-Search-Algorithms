@@ -32,5 +32,19 @@ namespace ACT4
             Y[4] = f.Y[4];
             Y[5] = f.Y[5];
         }
+
+        public override bool Equals(object obj)
+        {
+            for (int i = 0; i < 6; i++)
+                if (((SixState)obj).Y[i] != Y[i])
+                    return false;
+
+            return true;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Y[0], Y[1], Y[2], Y[3], Y[4], Y[5]);
+        }
     }
 }

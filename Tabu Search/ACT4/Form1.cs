@@ -19,7 +19,7 @@ namespace ACT4
         SixState currentState;
         int moveCounter;
 
-        //bool stepMove = true;
+        HashSet<SixState> tabu;
 
         int[,] hTable;
         ArrayList bMoves;
