@@ -19,10 +19,6 @@ namespace ACT4
         SixState currentState;
         int moveCounter;
 
-        double pThreshold = 500;
-
-        //bool stepMove = true;
-
         int[,] hTable;
         ArrayList bMoves;
         Object chosenMove;
