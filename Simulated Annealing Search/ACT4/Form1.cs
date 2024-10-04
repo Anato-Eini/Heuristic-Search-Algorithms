@@ -13,6 +13,7 @@ namespace ACT4
 {
     public partial class Form1 : Form
     {
+    
         int side;
         int n = 6;
         SixState startState;
