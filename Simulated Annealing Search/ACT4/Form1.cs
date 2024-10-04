@@ -98,9 +98,9 @@ namespace ACT4
             }
         }
 
-        private double getTemperature()
+        private double getTemperature(int hValue)
         {
-            return pThreshold < moveCounter ? 0 : (pThreshold - moveCounter) / pThreshold;
+            return Math.Pow(Math.E, hValue / (moveCounter + 1));
         }
 
         private SixState randomSixState()
@@ -173,17 +173,16 @@ namespace ACT4
             {
                 for (int j = 0; j < n; j++)
                 {
-                    if (bestHeuristicValue >= heuristicTable[i, j])
+                    if (bestHeuristicValue > heuristicTable[i, j])
                     {
                         bestHeuristicValue = heuristicTable[i, j];
+                        bestMoves.Clear();
                         if (currentState.Y[i] != j)
                             bestMoves.Add(new Point(i, j));
-                    }
-                    else if (random.NextDouble() <= getTemperature())
-                    {
-                        if(currentState.Y[i] != j)
+                    }else if(bestHeuristicValue == heuristicTable[i, j] ||
+                        random.NextDouble() <= getTemperature(heuristicTable[i, j]))
+                        if (currentState.Y[i] != j)
                             bestMoves.Add(new Point(i, j));
-                    }
                 }
             }
             label5.Text = "Possible Moves (H="+bestHeuristicValue+")";
