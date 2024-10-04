@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using System.Collections;
+using System.Globalization;
 
 namespace ACT4
 {
@@ -18,6 +19,10 @@ namespace ACT4
         SixState startState;
         SixState currentState;
         int moveCounter;
+
+        int maxFrequency;
+        int currentHeuristicValue;
+        int counter;
 
         //bool stepMove = true;
 
@@ -34,6 +39,9 @@ namespace ACT4
             startState = randomSixState();
             currentState = new SixState(startState);
 
+            maxFrequency = 30;
+            currentHeuristicValue = n * n;
+
             updateUI();
             label1.Text = "Attacking pairs: " + getAttackingPairs(startState);
         }
@@ -45,7 +53,7 @@ namespace ACT4
 
             //label1.Text = "Attacking pairs: " + getAttackingPairs(startState);
             label3.Text = "Attacking pairs: " + getAttackingPairs(currentState);
-            label4.Text = "Moves: " + moveCounter;
+            label4.Text = "Moves: " + moveCounter + "\nIteration: " + counter;
             hTable = getHeuristicTableForPossibleMoves(currentState);
             bMoves = getBestMoves(hTable);
 
@@ -98,15 +106,37 @@ namespace ACT4
 
         private SixState randomSixState()
         {
-            Random r = new Random();
-            SixState random = new SixState(r.Next(n),
-                                             r.Next(n),
-                                             r.Next(n),
-                                             r.Next(n),
-                                             r.Next(n),
-                                             r.Next(n));
+            int[] array = new int[n];
 
-            return random;
+            counter = 0;
+
+            for(int i = 0; i < n; i++)
+            {
+                Point point = (Point)chooseMove(getBestMoves(getHeuristicTableForPossibleMoves(array, i + 1), array, i + 1));
+                array[point.X] = point.Y;
+            }
+
+            return new SixState(array[0], array[1], array[2], array[3], array[4], array[5]);
+        }
+
+        private int getAttackingPairs(int[] array, int size)
+        {
+            int attackers = 0;
+
+            for (int i = 0; i < size; i++)
+            {
+                for (int j = i + 1; j < size; j++)
+                    if (array[i] == array[j])
+                        attackers++;
+                for (int j = i + 1; j < size; j++)
+                    if (array[j] == array[i] + j - i)
+                        attackers++;
+                for (int j = i + 1; j < size; j++)
+                    if (array[i] == array[j] + j - i)
+                        attackers++;
+            }
+
+            return attackers;
         }
 
         private int getAttackingPairs(SixState f)
@@ -136,6 +166,20 @@ namespace ACT4
             }
             
             return attackers;
+        }
+
+        private int[] getHeuristicTableForPossibleMoves(int[] array, int column)
+        {
+            int[] hStates = new int[n];
+
+            for(int i = 0; i < n; i++)
+            {
+                array[column - 1] = i;
+                hStates[i] = getAttackingPairs(array, column);
+            }
+
+            return hStates;
+                    
         }
 
         private int[,] getHeuristicTableForPossibleMoves(SixState thisState)
@@ -170,14 +214,49 @@ namespace ACT4
                         bestMoves.Clear();
                         if (currentState.Y[i] != j)
                             bestMoves.Add(new Point(i, j));
-                    } else if (bestHeuristicValue == heuristicTable[i,j])
+                    }
+                    else if (bestHeuristicValue == heuristicTable[i, j])
                     {
                         if (currentState.Y[i] != j)
                             bestMoves.Add(new Point(i, j));
                     }
                 }
             }
-            label5.Text = "Possible Moves (H="+bestHeuristicValue+")";
+
+            if(bestHeuristicValue < currentHeuristicValue)
+            {
+
+                currentHeuristicValue = bestHeuristicValue;
+                counter = 0;
+            }
+            else
+            {
+                counter++;
+            }
+
+
+            return bestMoves;
+        }
+
+        private ArrayList getBestMoves(int[] heuristicTable, int[] array, int column)
+        {
+            ArrayList bestMoves = new ArrayList();
+            int bestHeuristicValue = heuristicTable[0];
+
+            for(int i = 0; i < n; i++)
+            {
+                if (bestHeuristicValue > heuristicTable[i])
+                {
+                    bestHeuristicValue = heuristicTable[i];
+                    bestMoves.Clear();
+                    if (array[column - 1] != i)
+                        bestMoves.Add(new Point(column - 1, i));
+                }
+                else if (bestHeuristicValue == heuristicTable[i])
+                    if (array[column - 1] != i)
+                        bestMoves.Add(new Point(column - 1, i));
+            }
+
             return bestMoves;
         }
 
@@ -230,7 +309,19 @@ namespace ACT4
         {
             while (getAttackingPairs(currentState) > 0)
             {
-                executeMove((Point)chosenMove);
+                if(counter >= maxFrequency)
+                {
+                    startState = randomSixState();
+                    currentState = new SixState(startState);
+
+                    updateUI();
+                    label1.Text = "Attacking pairs: " + getAttackingPairs(startState);
+
+                }
+                else
+                {
+                    executeMove((Point)chosenMove);
+                }
             }
         }
 
