@@ -33,6 +33,8 @@ namespace ACT4
 
             startState = randomSixState();
             currentState = new SixState(startState);
+            tabu = new HashSet<SixState>();
+            tabu.Add(currentState);
 
             updateUI();
             label1.Text = "Attacking pairs: " + getAttackingPairs(startState);
@@ -164,17 +166,20 @@ namespace ACT4
             {
                 for (int j = 0; j < n; j++)
                 {
+                    SixState copy = new SixState(currentState);
+                    copy.Y[i] = j;
+                    
+                    if (tabu.Contains(copy))
+                        continue;
+
                     if (bestHeuristicValue > heuristicTable[i, j])
                     {
                         bestHeuristicValue = heuristicTable[i, j];
                         bestMoves.Clear();
                         if (currentState.Y[i] != j)
                             bestMoves.Add(new Point(i, j));
-                    } else if (bestHeuristicValue == heuristicTable[i,j])
-                    {
-                        if (currentState.Y[i] != j)
-                            bestMoves.Add(new Point(i, j));
                     }
+                    else bestMoves.Add(new Point(i, j));
                 }
             }
             label5.Text = "Possible Moves (H="+bestHeuristicValue+")";
@@ -196,7 +201,10 @@ namespace ACT4
             {
                 startState.Y[i] = currentState.Y[i];
             }
+
             currentState.Y[move.X] = move.Y;
+            tabu.Add(currentState);
+
             moveCounter++;
 
             chosenMove = null;
