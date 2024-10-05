@@ -47,7 +47,7 @@ namespace ACT4
 
             //label1.Text = "Attacking pairs: " + getAttackingPairs(startState);
             label3.Text = "Attacking pairs: " + getAttackingPairs(currentState);
-            label4.Text = "Moves: " + moveCounter;
+            label4.Text = "Moves: " + moveCounter + "\nTabu Count: " + tabu.Count();
             hTable = getHeuristicTableForPossibleMoves(currentState);
             bMoves = getBestMoves(hTable);
 
@@ -226,6 +226,9 @@ namespace ACT4
         {
             startState = randomSixState();
             currentState = new SixState(startState);
+
+            tabu.Clear();
+            tabu.Add(currentState);
 
             moveCounter = 0;
 
