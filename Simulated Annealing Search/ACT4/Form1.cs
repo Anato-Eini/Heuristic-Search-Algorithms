@@ -97,7 +97,7 @@ namespace ACT4
 
         private double getTemperature(int hValue)
         {
-            return Math.Pow(Math.E, hValue / (moveCounter + 1));
+            return Math.Pow(Math.E, -hValue / (moveCounter + 1));
         }
 
         private SixState randomSixState()
